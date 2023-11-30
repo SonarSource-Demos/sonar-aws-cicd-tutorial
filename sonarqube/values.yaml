@@ -1,0 +1,64 @@
+edition: "developer"
+
+image:
+  repository: sonarqube
+  tag: 10.3-developer
+
+elasticsearch:
+  # DEPRECATED: Use initSysctl.enabled instead
+  bootstrapChecks: false
+
+initSysctl:
+  enabled: false
+
+initFs:
+  enabled: true
+  # image: busybox:1.32
+  securityContext:
+    privileged: true
+
+## We usually don't make specific ressource recommandations, as they are heavily dependend on
+## The usage of SonarQube and the surrounding infrastructure.
+## Adjust these values to your needs, but make sure that the memory limit is never under 4 GB
+resources:
+  limits:
+    cpu: 800m
+    memory: 2Gi
+  requests:
+    cpu: 400m
+    memory: 2Gi
+
+persistence:
+  enabled: true
+  ## Set annotations on pvc
+  annotations: {}
+
+service:
+  type: LoadBalancer 
+  port: 9000
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
+    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+  
+## Configuration values for postgresql dependency
+## ref: https://github.com/bitnami/charts/blob/master/bitnami/postgresql/README.md
+postgresql:
+  # Enable to deploy the bitnami PostgreSQL chart
+  enabled: true
+  postgresqlUsername: "sonarUser"
+  postgresqlPassword: "sonarPass"
+  postgresqlDatabase: "sonarDB"
+  # Specify the TCP port that PostgreSQL should use
+  service:
+    port: 5432
+  resources:
+    limits:
+      cpu: 2
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 200Mi
+  persistence:
+    enabled: true
+    accessMode: ReadWriteOnce
+    size: 5Gi

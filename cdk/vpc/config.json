@@ -1,0 +1,7 @@
+{
+    "VPCName" : "AWSSonarTuto",
+    "VPCcidr"  : "192.168.0.0/16",
+    "ZA":2,
+    "SgName": "AWSSonarTuto_vpc",
+    "SGDescription":  "Security group for AWSSonarTuto"
+}
