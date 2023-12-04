@@ -307,6 +307,7 @@ NAME                          TYPE           CLUSTER-IP       EXTERNAL-IP       
 sonarqube-release-sonarqube   LoadBalancer   10.100.178.215   k8s-sonarqub-sonarqub-2ac585b2a4-58216b37bcec022f.elb.eu-central-1.amazonaws.com   9000:32440/TCP   2m38s
 ```
 
-> Note: You may uninstall this SonarQube deployment, your data will be preserved as long as the Persistent Volume storing the PostgreSQL DB is not lost.
+> ✨Note: You may uninstall this SonarQube deployment, your data will be preserved as long as the Persistent Volume storing the PostgreSQL DB is not lost.
 
+-----
 [Previous](../1.SonarCleanCode/README.md) | [Next](../3.ConfigureSonarQube//README.md)

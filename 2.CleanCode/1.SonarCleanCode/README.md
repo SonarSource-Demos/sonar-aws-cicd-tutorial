@@ -1,4 +1,4 @@
-# Soanr Clean Code
+# Sonar Clean Code
 
 In this chapter we will cover the fundamentals of Clean Code and why it's worthwhile for every software development team to track and improve code quality.
 

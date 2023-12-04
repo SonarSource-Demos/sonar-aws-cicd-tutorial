@@ -11,7 +11,6 @@ If you don't have one, please [reach out](https://www.sonarsource.com/plans-and-
 As an alternative, you may run through the SonarQube deployment to learn about such deployment on EKS but use [SonarCloud](https://www.sonarsource.com/products/sonarcloud/), which is free for public projects. This tutorial does not cover SonarCloud use and the few needed changes for it.
 
 1. Navigate to the SonarQube UI in your browser o nthe address you collected on the [previous step](../2.DeploySonarQube/README.md))
-
 2. Use **Username**\:`admin` and **Password**\:`admin` to log in
 3. Set a new password when prompted for it (don't forget this password!)
 4. On the SonarQube UI, navigate to **Administration -> Configuration -> License Manager**
@@ -50,4 +49,21 @@ When SonarQube gets called by AWS CodeBuild to analyse your code, a *Global Acce
 1. Enter a name for the token `globalanalysis`
 1. Set type to `Global Analysis Token`
 1. Click **Generate**
-1. Copy the token and save it somewhere. You will need it later!
+1. Copy the token and store it with AWS Secret manager in the next step
+
+
+## Store your Secrets
+
+We'll now store the SonarQube URL and the analysis token as expected by your CodeBuild pipelines later on.
+
+1. Navigate to the AWS Secrets Manager console **for your region**
+1. Select **Store a new secret**
+1. Pick **Other type of secret**
+1. Select **Key/Value** and add the two following key/value pairs:
+    * SONAR_HOST_URL: the **public** URL of your SonarQube service on EKS ([from the Deploy SonarQube step](../2.DeploySonarQube/README.md)).  **Make sure you preface the url with `http://`!**
+    * SONAR_TOKEN: your global analysis token
+1. Name your secret as configured with your [config_cdr.json](../../cdk/config_crd.json), including your index, e.g. `prod/sonar04`
+1. Click **Next** and **Next** and **Store**
+
+-----
+[Previous](../2.DeploySonarQube/README.md) | [Next](../../assets/3.DevOps)

@@ -1,0 +1,13 @@
+{
+ "Reponame": "sonar-sample-app",
+ "Desc": "This project demonstrate a simple SQL injection vulnerability on a SpringBoot project",
+ "GitRepo": "https://github.com/SonarSource-Demos/sonar-aws-java-app.git",
+ "Recr": "app-container-repo",
+ "ImgTag": "Latest",
+ "BuildPr": "clean-java-code-build",
+ "PiplineN": "main-java-code-build",
+ "ClusterName": "SonarAWSTuto",
+ "EksAdminRole": "AdminRole",
+ "SecondBramchName": "new-service"
+
+}
