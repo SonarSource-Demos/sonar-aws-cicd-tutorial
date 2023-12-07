@@ -128,7 +128,7 @@ cd ../eks
   * InstanceSize: AWS Instance size
   * AddonVersion: Addon version for EBS CSI Driver : 1.24.0-eksbuild.1
   * ScName: Name of the Storage Class
-  * ScNamef: file to load for that SC
+  * ScNamef: Path of store class manifest file 
 
 Once it's done, run the following commands in the eks folder:
 ```bash
