@@ -22,6 +22,7 @@ type ConfAuth struct {
 	Account    string
 	SSOProfile string
 	Index      string
+	AWSsecret  string
 }
 
 type Configuration struct {
