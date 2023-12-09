@@ -1,10 +1,12 @@
 # Configure Sonarqube
 
 After SonarQube has been successfully started with the previos step, it must be configured with two things:
+
 1. a license
 1. a project
 
 ## Setting SonarQube license
+
 This workshop demonstrates several functionalities that are not provided with the [SonarQube Community Edition](https://www.sonarsource.com/open-source-editions/sonarqube-community-edition/) like branch and PR analysis, taint analysis etc.
 The Developer Edition we deployed requires a license.
 If you don't have one, please [reach out](https://www.sonarsource.com/plans-and-pricing/developer/) to obtain one (a Developer Edition 100k is sufficient for this tutorial).
@@ -34,13 +36,14 @@ Select a local project setup and fill in the following info:
 * Main branch name: `main`
 * You may ignore the UI warning
 
-![](../../assets/2.CleanCode/create-2.png)
+![Create the project](../../assets/2.CleanCode/create-2.png)
 
 When asked **What should be the baseline for new code for this project?** select `Use the global setting`.
 
 Your SonarQube project is ready, waiting for the first pipeline analysis.
 
 ## Creating a Global Access Token
+
 When SonarQube gets called by AWS CodeBuild to analyse your code, a *Global Access Token* is passed along for authentication. Follow these steps to create the token:
 
 1. On the SonarQube UI, look for the **A** on your upper right hand side
@@ -50,7 +53,6 @@ When SonarQube gets called by AWS CodeBuild to analyse your code, a *Global Acce
 1. Set type to `Global Analysis Token`
 1. Click **Generate**
 1. Copy the token and store it with AWS Secret manager in the next step
-
 
 ## Store your Secrets
 
@@ -65,5 +67,5 @@ We'll now store the SonarQube URL and the analysis token as expected by your Cod
 1. Name your secret as configured with your [config_cdr.json](../../cdk/config_crd.json), including your index, e.g. `prod/sonar04`
 1. Click **Next** and **Next** and **Store**
 
------
-[Previous](../2.DeploySonarQube/README.md) | [Next](../../assets/3.DevOps)
+----
+[Previous](../2.DeploySonarQube/README.md) | [Next](../../3.DevOps/README.md)
