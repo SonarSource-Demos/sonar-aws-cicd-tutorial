@@ -28,7 +28,7 @@ Your PR is 'Clean Code-Ready', you may now merge it and get the new functionalit
 
 ## The End
 
-You've reached the end of this Tutorial, congrats!
+You've reached the end of this tutorial, congrats!
 
-----
-[Previous](../3.DevOps/README.md)
+---
+[Previous](../3.DevOps/README.md)|[Clean Up](../5-CleanUp/README.md)
