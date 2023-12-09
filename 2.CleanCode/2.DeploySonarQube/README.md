@@ -20,15 +20,16 @@ In this chapter we'll deploy SonarQube to EKS, using the [SonarQube generic Helm
 
 ### Deployment tools
 
-It's recommended to run this tutorila from your loacal machine and also learn about SonarLint. Most of these tools are common tools used by DevOps engineers working on AWS, some of them would be used by Developers hosting their projects on CodeCommit. Your local machine would need the following:
+It's recommended to run this tutorial from your local machine and also learn about [SonarLint](https://www.sonarsource.com/products/sonarlint/). Most of these tools are common tools used by DevOps engineers working on AWS, some of them would be used by Developers hosting their projects on CodeCommit. Your local machine will need the following:
 
 * IntelliJ or VisualStudio Code IDE
-* The [AWS CLI](https://aws.amazon.com/cli/)
-* The [Git CLI](https://git-scm.com/downloads)
+* SonarLint plugin installed from the IDE marketplace
+* [AWS CLI](https://aws.amazon.com/cli/)
+* [Git CLI](https://git-scm.com/downloads)
+* [AWS git-remote-codecommit](https://docs.aws.amazon.com/codecommit/latest/userguide/setting-up-git-remote-codecommit.html) Git extension
 * [kubectl](https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html)
 * [helm](https://helm.sh/docs/intro/install/)
 * [NodeJS](https://nodejs.org/en/download)
-* [AWS git-remote-codecommit](https://docs.aws.amazon.com/codecommit/latest/userguide/setting-up-git-remote-codecommit.html) Git extension
 * [eksctl](https://eksctl.io/installation/)
 * [Go](https://go.dev/doc/install)
 * [AWS CDK](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html)
@@ -39,7 +40,7 @@ Make sur you're authenticated from the command line on your AWS IAM profile. You
 
 ```bash
 aws sts get-caller-identity
-``````
+```
 
 ## Cluster creation
 
@@ -53,6 +54,7 @@ In this step, you'll configure your AWS profiles for the following cdk scripts.
 ```bash
 cd cdk
 ```
+
 And edit the [config_crd.json](../../cdk/config_crd.json) according to your aws credentials and preferences:
 
 * Region: Deployment region
@@ -116,6 +118,7 @@ This step will create your new EKS cluster. the CDK commands and config files ar
 ```bash
 cd ../eks
 ```
+
 * The ```cdk.json``` file in the folder describes how the toolkit should execute the cluser creation. You don't need to edit that file.
 * the ```config.json``` file must be configured for your setup (the provided values should work except for the VPC ID which you MUST change with your own)
   * ClusterName: EKS Cluster Name
@@ -131,6 +134,7 @@ cd ../eks
   * ScNamef: Path of store class manifest file for addons
 
 Once it's done, run the following commands in the eks folder:
+
 ```bash
 # Install the required go modules based on the go.mod and go.sum files
 go mod download
@@ -158,9 +162,11 @@ aws eks update-kubeconfig --name ClustWorkshop-01 --region eu-central-1 --role-a
 ```
 
 You may check your cluster is running with your configured number of nodes:
+
 ```bash
- kubectl get nodes
+kubectl get nodes
 ```
+
 ```text
 NAME                                            STATUS   ROLES    AGE   VERSION
 ip-192-168-189-143.eu-central-1.compute.internal   Ready    <none>    5m   v1.27.7-eks-e71965b
@@ -184,6 +190,7 @@ You may check it was activated on the kube-system namespace of your cluster
 ```bash
 kubectl get deployment/ebs-csi-controller -n kube-system
 ```
+
 ```text
 NAME                 READY   UP-TO-DATE   AVAILABLE   AGE
 ebs-csi-controller   2/2     2            2           1m00s
@@ -194,6 +201,7 @@ And if the managed-csi storage class is indeed available:
 ```bash
 kubectl get sc
 ```
+
 ```text
 NAME            PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
 gp2 (default)   kubernetes.io/aws-ebs   Delete          WaitForFirstConsumer   false                  12h
@@ -232,6 +240,7 @@ helm upgrade --install -f ./values.yaml  --create-namespace -n sonarqube sonarqu
 ```bash
 kubectl get all -n sonarqube
 ```
+
 ```text
 NAME                                             READY   STATUS    RESTARTS   AGE
 pod/sonarqube-release-postgresql-0                 1/1     Running   0          5d7h
@@ -253,9 +262,11 @@ statefulset.apps/sonarqube-release-postgresql   1/1     5d7h
 ```
 
 You may also check that all ressources and services were correctly attached to the cluster:
+
 ```bash
 kubectl get po,svc,pv -n kube-system
 ```
+
 ```text
 NAME                                                READY   STATUS    RESTARTS   AGE
 pod/aws-load-balancer-controller-5b9c68895c-gzvl2   1/1     Running   0          43m
@@ -302,6 +313,7 @@ Once SonarQube Service is ready, you can check the public address assigned to it
 ```bash
 kubectl get svc -w sonarqube-release-sonarqube -n sonarqube
 ```
+
 ```text
 NAME                          TYPE           CLUSTER-IP       EXTERNAL-IP                                                                     PORT(S)          AGE
 sonarqube-release-sonarqube   LoadBalancer   10.100.178.215   k8s-sonarqub-sonarqub-2ac585b2a4-58216b37bcec022f.elb.eu-central-1.amazonaws.com   9000:32440/TCP   2m38s
@@ -310,4 +322,4 @@ sonarqube-release-sonarqube   LoadBalancer   10.100.178.215   k8s-sonarqub-sonar
 > ✨Note: You may uninstall this SonarQube deployment, your data will be preserved as long as the Persistent Volume storing the PostgreSQL DB is not lost.
 
 -----
-[Previous](../1.SonarCleanCode/README.md) | [Next](../3.ConfigureSonarQube//README.md)
+[Previous](../1.SonarCleanCode/README.md) | [Next](../3.ConfigureSonarQube/README.md)
