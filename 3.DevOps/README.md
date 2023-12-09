@@ -1,12 +1,12 @@
 # AWS CI/CD
 
-In this section, we'll prepare the example repository and the pipeline that will build, analyze, and deploy it.
+In this section, we'll prepare the example application repository and the pipeline that will build, analyze, and deploy this application.
 The entire stack makes use of:
 
 * CodeCommit: to host the repository
-* CodeBuild: to run your pepeline
+* CodeBuild: to run your pipeline
 * CodePipeline: to trigger the pipeline on events
-* EventBridge: to allow builds to run on Pull Request events, and also on commits on branches that are not the main branch
+* EventBridge: to allow builds to run on Pull Request events
 * Elastic Container Registry (ECR): to host the created Application docker images
 * Elastic Kubernetes Services (EKS): to run the application
 
@@ -42,15 +42,17 @@ cd cdk/devops
 
 Once you have set your cluster name in the ```config.json``` file, run the following commands in the devops folder:
 
-# Install the required go modules based on the go.mod and go.sum files
 ```bash
+# Install the required go modules based on the go.mod and go.sum files
 go mod download
 # check your changes
 cdk diff
 # Create the resources
 cdk deploy
 ```
+
 A successful run will conclude as follows:
+
 ```text
  ✅  DevopsStack04
 
@@ -67,7 +69,7 @@ arn:aws:cloudformation:eu-west-3:123478389876:stack/DevopsStack04/236948c0-929c-
 ## Populate the repository
 
 Once the repository is created, let's populate it:
-As this script leveage your aws SSO credentials, you MUST be logged with it before you can use it.
+As this script leverages your aws SSO credentials, you MUST be logged with it before you can use it.
 
 ```bash
 # ensure aws sso credentials are set
@@ -75,7 +77,9 @@ aws sso login
 # populate the repository
 go run gitdep.go deploy
 ```
+
 A successful run will output the following
+
 ```text
 ✅ CodeCommit repository created successful.
 ✅ Successfully updated EKS Admin Role.
@@ -88,6 +92,7 @@ A successful run will output the following
 
 **Note**
 In case you need to run run the commands in this page multiple times, you might need to manually remove a trust policy added to your cluster admin role:
+
 1. Go to AWS IAM
 2. Search for the ```<ClusterName><Index>AdminRole``` role
 3. Edit the trust policy
