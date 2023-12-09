@@ -58,5 +58,5 @@ If you execute the steps in this tutorial in your own AWS account, this tutorial
 
 Feel free to use the region of your choice to run this tutorial!
 
------------------
-[Previous](./README.md) | [Next](./1-Introcution/README.md)
+---
+[Next](./1-Introduction/README.md)
