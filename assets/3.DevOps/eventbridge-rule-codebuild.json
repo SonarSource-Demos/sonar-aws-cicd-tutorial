@@ -1,0 +1,76 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "CloudFormation template for EventBridge rule 'OnPullRequestSonarTrigger'",
+    "Parameters": {
+      "CodeCommitRepositoryARN": {
+        "Type": "String",
+        "AllowedPattern": ".+"
+       },
+       "SonarCodeBuildProjectARN": {
+        "Type": "String",
+        "AllowedPattern": ".+"
+       }
+    },
+    "Resources": {
+      "EventBridgeCodeBuildRole": {
+        "Type": "AWS::IAM::Role",
+        "Properties": {
+         "AssumeRolePolicyDocument": {
+          "Statement": [
+           {
+            "Action": "sts:AssumeRole",
+            "Effect": "Allow",
+            "Principal": {
+             "Service": "events.amazonaws.com"
+            }
+           }
+          ],
+          "Version": "2012-10-17"
+         },
+         "Description": "Allows EventBridge to invoke CodeBuild",
+         "Policies": [
+          {
+           "PolicyDocument": {
+            "Statement": [
+             {
+              "Action": "codebuild:StartBuild",
+              "Effect": "Allow",
+              "Resource": { "Ref" : "SonarCodeBuildProjectARN" }
+             }
+            ],
+            "Version": "2012-10-17"
+           },
+           "PolicyName": "AllowEventBridgeInvokeCodeBuild"
+          }
+         ]
+        }
+       },
+      "EventRule0": {
+        "Type": "AWS::Events::Rule",
+        "Properties": {
+          "EventBusName": "default",
+          "EventPattern": {
+            "source": ["aws.codecommit"],
+            "detail-type": ["CodeCommit Pull Request State Change"],
+            "resources": [{ "Ref" : "CodeCommitRepositoryARN" }]
+          },
+          "Name": "OnPullRequestSonarTrigger",
+          "State": "ENABLED",
+          "Targets": [{
+            "Id": "SonarCodeBuildProject",
+            "Arn": { "Ref" : "SonarCodeBuildProjectARN" },
+            "RoleArn": {"Fn::GetAtt" : [  "EventBridgeCodeBuildRole", "Arn" ]},
+            "InputTransformer": {
+              "InputPathsMap": {
+                "sourceReference": "$.detail.sourceReference",
+                "PRKey": "$.detail.pullRequestId",
+                "DestinationBranch": "$.detail.destinationReference",
+                "SourceBranch": "$.detail.sourceReference"
+              },
+              "InputTemplate": "{\n    \"environmentVariablesOverride\": [\n      {\n        \"name\": \"SourceBranch\",\n        \"type\": \"PLAINTEXT\",\n        \"value\": <SourceBranch>\n      },\n      {\n        \"name\": \"DestinationBranch\",\n        \"type\": \"PLAINTEXT\",\n        \"value\": <DestinationBranch>\n      },\n      {\n        \"name\": \"PRKey\",\n        \"type\": \"PLAINTEXT\",\n        \"value\": <PRKey>\n      }\n    ],\n    \"sourceVersion\": <sourceReference>\n}"
+            }
+          }]
+        }
+      }
+    }
+  }

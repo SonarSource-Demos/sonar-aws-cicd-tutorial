@@ -150,5 +150,68 @@ NAME                                        READY   STATUS    RESTARTS   AGE
 sonar-aws-javaapp-deploy-123c4c85b4-h6x45   1/1     Running   0          1m46s
 ```
 
+## EventBridge for PR analysis
+
+In a fast-moving software development process, we want to get feedback on code quality as early as possible. Traditionally this would require a commit to the delivery branch and waiting for the pipeline to complete. By using Sonar's Pull Request (PR) analysis feature we can shorten the feedback loop protect the delivery branches from 'bad code'.
+
+The `AWS Sonar Plugin` is a CloudFormation template that deploys an Amazon EventBridge rule to enable the previously described workflow.
+
+### How does the AWS Sonar Eventbridge Plugin work?
+
+The Plugin uses EventBridges input transformers to bring the event data into the right format and then triggers CodeBuilds StartBuild API. The plugin covers the highlighted "pre-merge validation" phase:
+
+![EventBridge schema](/assets/3.DevOps/multibranch-PR-flow.png)
+
+### Deploy the CloudFormation template
+
+In this step you will deploy the CloudFormation script: [eventbridge-rule-codebuild.json](/assets/3.DevOps/eventbridge-rule-codebuild.json)
+Before we may deploy it we need to take note of tsome wo important values of your CI/CD infrastructure:
+
+1. First run the following command to get your repository identifier:
+
+```bash
+# list the repositories
+aws codecommit list-repositories
+# get your repository details
+aws codecommit get-repository --repository-name sonar-sample-app-02
+```
+
+Take note of the returned `Arn`
+
+2. Then we'll need your codebuild identifier:
+
+```bash
+# list your build projects:
+aws codebuild list-projects
+# get the identifier for your project
+aws codebuild batch-get-projects --names clean-java-code-build-02
+```
+
+Take note of the returned `arn` value
+
+3. Now Navigate to the ClouFormation Console for your zone (e.g. [here](https://eu-west-1.console.aws.amazon.com/cloudformation/home) for eu-west-1)
+1. Select `Create stack` and `With new resources` (standard)
+2. Upload the eventbridge-rule-codebuild.json and select `Next`
+3. Give the stack a name like *sonar-eventbridge-plugin*
+4. Enter the CodeCommitRepositoryARN and SonarCodeBuildProjectARN you previously took note of.
+5. Click `Next`
+6. Check `I acknowledge that AWS CloudFormation might create IAM resources` and yhen `Submit`
+
+This will take a minute to deploy.
+
+### Variables in buildspec.yaml
+
+The pipeline definition file, `buildspec.yml`, is an important piece of the puzzle. It is triggered for all types of builds, main branch builds **and** PR analysis builds through CodePipeline. It reads all of the previously set variables and needs to understand how to trigger the [SonarScanner for Maven](https://docs.sonarsource.com/sonarqube/9.8/analyzing-source-code/scanners/sonarscanner-for-maven/).
+
+Take a look at your buildspec.yml at the root of your CodeCommit repository .
+
+In detail, the buildspec.yml needs to declare and use the following variables to be compatible with the AWS Sonar Plugin:
+
+* `SourceBranch` for the name of the feature branch to be merged (PR cases) or the name of the long-lived branch (usually main)
+* `DestinationBranch` (only available if the build is triggered by a PR!) for the branch the PR targets
+* `PRKey` (only available if the build is triggered by a PR!) the ID of the PR. CodeCommit manages these ID.
+
+Everything is now ready for PR and branch analysis.
+
 ----
 [Previous](../2.CleanCode/3.ConfigureSonarQube/README.md) | [Next](../4.DevWorkflow/README.md)
