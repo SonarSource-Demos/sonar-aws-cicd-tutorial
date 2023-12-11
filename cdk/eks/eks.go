@@ -14,7 +14,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/sts"
 	"github.com/aws/constructs-go/constructs/v10"
 	"github.com/aws/jsii-runtime-go"
-	kubectlv27 "github.com/cdklabs/awscdk-kubectl-go/kubectlv27/v2"
+	kubectlv28 "github.com/cdklabs/awscdk-kubectl-go/kubectlv28/v2"
 )
 
 type EksStackProps struct {
@@ -164,7 +164,7 @@ func NewEksStack(scope constructs.Construct, id string, props *EksStackProps, Ap
 		Role:                    eksAdminRole,
 		MastersRole:             eksAdminRole,
 		Version:                 awseks.KubernetesVersion_Of(&AppConfig.K8sVersion),
-		KubectlLayer:            kubectlv27.NewKubectlV27Layer(stack, jsii.String("kubectl127layer")),
+		KubectlLayer:            kubectlv28.NewKubectlV28Layer(stack, jsii.String("kubectl128layer")),
 		DefaultCapacity:         &AppConfig.Workernode,
 		DefaultCapacityInstance: awsec2.InstanceType_Of(awsec2.InstanceClass(Instance), awsec2.InstanceSize(InstanceSZ)),
 		DefaultCapacityType:     awseks.DefaultCapacityType_NODEGROUP,
