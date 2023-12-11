@@ -20,19 +20,18 @@ As an alternative, you may run through the SonarQube deployment to learn about s
 
 > ✨ If you are exploring these resources "offline" and would need a SonarQube evaluation license, request it from the SonarSource website [here](https://www.sonarsource.com/plans-and-pricing/)
 
-## Creating the SonarQube project
+## Creating the SonarQube project - Optional
 
-A SonarQube *project* typically gathers the analysis results of a code repository (other setups are possible but not described in this workshop). Our sample Java application code is hosted on an AWS CodeCommit repository. Let's create the corresponding SonarQube project!
+A SonarQube *project* typically gathers the analysis results of a code repository (other setups are possible but not described in this workshop). Our sample Java application code is hosted on an AWS CodeCommit repository. You may create the project before its first analysis manually, or you may let the first analysis create it.
 
-Projects can either be created from the SonarQube UI, or from their first analysis. We'll use the UI.
 The project creation UI should open right after a license was set on the SonarQube instance:
 
-![](../../assets/2.CleanCode/create-1.png)
+![Project creation](../../assets/2.CleanCode/create-1.png)
 
 Select a local project setup and fill in the following info:
 
-* Project name: `Sonar AWS Tutorial`
-* Project key: `sonar-aws-tutorial`
+* Project name: `Web Services`
+* Project key: `java-spring-example` This value is the project identifier, this value was set for you in the `buildsepc.yaml` pipeline definition file. If you prefer another project key, you'll have to align the `SONAR_PROJECT` variable once the repository is created.
 * Main branch name: `main`
 * You may ignore the UI warning
 
