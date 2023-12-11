@@ -14,7 +14,8 @@ From the root folder of the tutorial repository, apply the following commands:
 ```bash
 cd cdk/devops
 # Destroy the resources
-cdk destroy
+go run gitdep.go -destroy=true
+cdk destroy --force
 ```
 
 ## Uninstall SonarQube
@@ -34,10 +35,10 @@ From the root folder of the tutorial repository, apply the following commands:
 ```bash
 cd cdk/eks/addons
 # Remove the addons
-cdk deploy --context destroy=true
+cdk deploy --force --context destroy=true
 # Destroy the cluster
 cd ..
-cdk destroy
+cdk destroy --force
 ```
 
 ## Destroy your VPC
@@ -47,5 +48,5 @@ From the root folder of the tutorial repository, apply the following commands:
 ```bash
 cd cdk/vpc
 # Destroy the resources
-cdk destroy
+cdk destroy --force
 ```

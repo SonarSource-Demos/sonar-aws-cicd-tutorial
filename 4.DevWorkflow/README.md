@@ -9,7 +9,7 @@ This last phase of our tutorial will highlight what's happening in a regular Dev
   * a second PR analysis is immediatley launched after the first if you fix any conflict with a new commit.
   * your CodeBuild PR run(s) will fail because the Quality Gate does not pass, as described with [Failing a pipeline job when the quality gate fails | SonarQube Docs](https://docs.sonarsource.com/sonarqube/latest/analyzing-source-code/ci-integration/overview/#quality-gate-fails)
 
-![QualityGate](/assets/4.DevWorkflow/qualitygate.png)
+![Quality Gate](/assets/4.DevWorkFlow/qualitygate.png)
 
 * You may now explore the issues that are breaking the Quality Gate, and fix them on your new-service branch.
 * Don't hesitate to explore how your new-service branch is vulnerable to SQL injection locally
@@ -22,7 +22,7 @@ This last phase of our tutorial will highlight what's happening in a regular Dev
 * Your PR will get analyzed again after you push you new commit(s) to the CodeCommit repository
 * Once thall issues are adressed, SonarQube Quality Gate will be green and your CodeBuild run will pass
 
-![Passed QualityGate](/assets/4.DevWorkflow/passedQualityGate.png)
+![Passed Quality Gate](/assets/4.DevWorkFlow/passedQualityGate.png)
 
 Your PR is 'Clean Code-Ready', you may now merge it and get the new functionalities deployed.
 
