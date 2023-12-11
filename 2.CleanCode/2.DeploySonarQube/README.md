@@ -65,7 +65,7 @@ And edit the [config_crd.json](../../cdk/config_crd.json) according to your aws 
 
 ### Step 2 - Set your VPC and Security Groups
 
-The step will configure your Virtual Private Network to host SonarQube (and later your Java app) and set the permissions for your ressources.
+The step will configure your Virtual Private Network to host SonarQube (and later your Java app) and set the permissions for your resources.
 
 *Note: If you need to reuse an existing VPC, you may skip this step. In that case, please make sure your private subnet has the following tag: ```kubernetes.io/role/internal-elb=1``` and that your public subnet has this one: ```kubernetes.io/role/elb=1```*
 
@@ -150,7 +150,7 @@ The command will require a few minutes to run and should output the details of y
  ✨  Deployment time: 1018.37s
 
 Outputs:
-✅  EksStack01.SonarAWSTutoConfigCommandFAA0F346 = aws eks update-kubeconfig --name SonarAWSTuto --region eu-central-1 --role-arn arn:aws:iam::XXXXXX:role/SonarAWSTuto-01-AdminRole
+✅  EksStack02.SonarAWSTutoConfigCommandFAA0F346 = aws eks update-kubeconfig --name SonarAWSTuto --region eu-central-1 --role-arn arn:aws:iam::XXXXXX:role/SonarAWSTuto-02-AdminRole
 
 ✨  Total time: 1023.36s
 ```
@@ -158,7 +158,7 @@ Outputs:
 You need to apply changes to your kubectl credentials accordingly. Copy the proposed kubectl command, and replace the XXXXXX part with your own Account ID:
 
 ```bash
-aws eks update-kubeconfig --name ClustWorkshop-01 --region eu-central-1 --role-arn arn:aws:iam::XXXXXX:role/ClustWorkshop-01-AdminRole
+aws eks update-kubeconfig --name SonarAWSTuto-02 --region eu-central-1 --role-arn arn:aws:iam::XXXXXX:role/SonarAWSTuto-02-AdminRole
 ```
 
 You may check your cluster is running with your configured number of nodes:
