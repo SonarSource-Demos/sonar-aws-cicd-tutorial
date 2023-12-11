@@ -22,6 +22,7 @@ Two scripts have been designed to automate the creation and configuration of the
 * Setup CodePipeline
 
 This configuration is done from the ```cdk/devops``` folder in the present repository:
+
 ```bash
 cd cdk/devops
 ```
@@ -191,11 +192,11 @@ Take note of the returned `arn` value
 
 3. Now Navigate to the ClouFormation Console for your zone (e.g. [here](https://eu-west-1.console.aws.amazon.com/cloudformation/home) for eu-west-1)
 1. Select `Create stack` and `With new resources` (standard)
-2. Upload the eventbridge-rule-codebuild.json and select `Next`
-3. Give the stack a name like *sonar-eventbridge-plugin*
-4. Enter the CodeCommitRepositoryARN and SonarCodeBuildProjectARN you previously took note of.
-5. Click `Next`
-6. Check `I acknowledge that AWS CloudFormation might create IAM resources` and yhen `Submit`
+1. Upload the eventbridge-rule-codebuild.json and select `Next`
+1. Give the stack a name like *sonar-eventbridge-plugin*
+1. Enter the CodeCommitRepositoryARN and SonarCodeBuildProjectARN you previously took note of.
+1. Click `Next`
+1. Check `I acknowledge that AWS CloudFormation might create IAM resources` and yhen `Submit`
 
 This will take a minute to deploy.
 
