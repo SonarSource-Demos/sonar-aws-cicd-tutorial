@@ -1,13 +1,13 @@
 {
         "ClusterName" : "SonarAWSTuto",
         "VPCid" : "vpc-09984b9cc1c290321",
-        "K8sVersion" : "1.27",
+        "K8sVersion" : "1.28",
         "Workernode" : 2,
         "EksAdminRole": "AdminRole",
         "EBSRole": "CSIDriverRole",
         "Instance": "C5",
         "InstanceSize": "LARGE",
-        "AddonVersion": "v1.24.0-eksbuild.1",
+        "AddonVersion": "v1.25.0-eksbuild.1",
         "ScName": "managed-csi",
         "ScNamef": "dist/sc.yaml"
 }
