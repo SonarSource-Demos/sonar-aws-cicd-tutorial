@@ -22,7 +22,7 @@ This last phase of our tutorial will highlight what's happening in a regular Dev
 * Your PR will get analyzed again after you push you new commit(s) to the CodeCommit repository
 * Once thall issues are adressed, SonarQube Quality Gate will be green and your CodeBuild run will pass
 
-![Passed QualityGate](/assets/4.DevWorkFlow/passedQualityGate.png)
+![Passed Quality Gate](/assets/4.DevWorkFlow/passedQualityGate.png)
 
 Your PR is 'Clean Code-Ready', you may now merge it and get the new functionalities deployed.
 
